@@ -15,6 +15,11 @@ Route::middleware([Authenticate::class])->group(function () {
     Route::resource('daftar', DaftarController::class);
 });
 
+Route::get('logout', function () {
+    Auth::logout();
+    return redirect('login');
+});
+
 Route::resource('matakuliah', MatakuliahController::class);
 
 Route::get('mahasiswa', [MahasiswaController::class, 'index']);

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Data Pendaftaran'])
+@extends('layouts.app_modern', ['title' => 'Data Pendaftaran'])
 @section('content')
     <div class="card">
         <h5 class="card-header">Data Pendaftaran</h5>

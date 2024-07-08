@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app_modern')
 @section('content')
 <div class="card">
     <h5 class="card-header">Tambah Data Pasien</h5>
