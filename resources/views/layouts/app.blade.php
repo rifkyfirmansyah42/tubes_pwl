@@ -7,19 +7,45 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <title>{{$title ?? '' }}{{env('APP_NAME')}}</title>
+    <link rel="shortcut icon" type="image/png" href="/modern/src/assets/images/logos/favicon.png" />
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+     <link href="{{ asset('assets/user/lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="{{ asset('assets/user/lib/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/user/lib/animate/animate.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/user/lib/venobox/venobox.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/user/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="{{ asset('assets/user/css/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/user/css/custom.css') }}" rel="stylesheet">
+
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <style>
-        .card{
-            background-color: white;
+        body{
+            background-image: url("/modern/src/assets/images/backgrounds/klinik.jpg");
         }
+        footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px; /* Set height as desired */
+    background-color: #333; /* Set background color as desired */
+    color: #fff; /* Set text color as desired */
+    text-align: center;
+    padding: 10px;
+}
+
+footer p {
+    margin-bottom: 0;
+}
     </style>
 </head>
 
@@ -130,6 +156,13 @@
                 @yield('content')
             </div>
         </main>
+
+       <footer class="bg-white text-dark text-center p-4">
+    <div class="container">
+        <p>&copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}</p>
+    </div>
+</footer>
+
     </div>
 </body>
 </html>

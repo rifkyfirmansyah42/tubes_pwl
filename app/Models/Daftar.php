@@ -4,15 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Daftar extends Model
 {
     use HasFactory;
-    protected $guarded = [];
 
-    public function pasien(): BelongsTo
+    protected $fillable = [
+        'tanggal_daftar',
+        'pasien_id',
+        'poli',
+        'keluhan',
+    ];
+
+    public function pasien()
     {
-        return $this->belongsTo(Pasien::class)->withDefault();
+        return $this->belongsTo(Pasien::class);
     }
 }
+

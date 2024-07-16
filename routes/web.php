@@ -13,6 +13,17 @@ use Illuminate\Auth\Middleware\Authenticate;
 Route::middleware([Authenticate::class])->group(function () {
     Route::resource('pasien', PasienController::class);
     Route::resource('daftar', DaftarController::class);
+
+    Route::post('/daftar', [DaftarController::class, 'store']);
+    Route::get('/daftar', [DaftarController::class, 'index']);
+    Route::get('/daftar/create', [DaftarController::class, 'create']);
+    Route::get('/daftar', [DaftarController::class, 'index']);
+    Route::get('/daftar/create', [DaftarController::class, 'create']);
+    Route::post('/daftar', [DaftarController::class, 'store']);
+    Route::get('/daftar/{id}/edit', [DaftarController::class, 'edit']);
+    Route::put('/daftar/{id}', [DaftarController::class, 'update']);
+    Route::delete('/daftar/{id}', [DaftarController::class, 'destroy']);
+
 });
 
 Route::get('logout', function () {
@@ -28,6 +39,7 @@ Route::get('mahasiswa/tambah', [MahasiswaController::class, 'tambah']);
 
 Route::get('dosen', [DosenController::class, 'index']);
 Route::get('dosen/tambah', [DosenController::class, 'tambah']);
+
 
 
 Route::get('profil', function () {

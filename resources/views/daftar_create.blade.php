@@ -36,6 +36,14 @@
                 </select>
                 <span class="text-danger">{{ $errors->first('poli') }}</span>
             </div>
+            <div class="form-group mt-3">
+                <label for="keluhan">Keluhan</label>
+                <textarea name="keluhan" class="form-control">{{ old('keluhan') }}</textarea>
+                <span class="text-danger">{{ $errors->first('keluhan') }}</span>
+            </div>
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
         </form>
     </div>
 </div>

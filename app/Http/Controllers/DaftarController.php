@@ -2,73 +2,77 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Daftar;
-use App\Http\Requests\StoreDaftarRequest;
-use App\Http\Requests\UpdateDaftarRequest;
+use App\Models\Pasien;
 
 class DaftarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $data['daftar'] = \App\Models\Daftar::latest()->paginate(10);
-        return view('daftar_index', $data);
+        $daftar = Daftar::with('pasien')->paginate(10);
+        return view('daftar_index', compact('daftar'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $data['listPasien'] = \App\Models\Pasien::orderBy('nama', 'asc')->get();
-        $data['listPoli'] = [
+        $listPasien = Pasien::all();
+        $listPoli = [
             'Poli Umum' => 'Poli Umum',
             'Poli Gigi' => 'Poli Gigi',
-            'Poli Kandungan' => 'Poli Kandungan',
             'Poli Anak' => 'Poli Anak',
+            // tambahkan poli lainnya
         ];
-        return view('daftar_create', $data);
+        return view('daftar_create', compact('listPasien', 'listPoli'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreDaftarRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'tanggal_daftar' => 'required|date',
+            'pasien_id' => 'required|exists:pasiens,id',
+            'poli' => 'required|string',
+            'keluhan' => 'required|string',
+        ]);
+
+        Daftar::create($request->all());
+
+        return redirect('/daftar')->with('success', 'Pendaftaran berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Daftar $daftar)
+    public function edit($id)
     {
-        //
+        $daftar = Daftar::findOrFail($id);
+        $listPasien = Pasien::all();
+        $listPoli = [
+            'Poli Umum' => 'Poli Umum',
+            'Poli Gigi' => 'Poli Gigi',
+            'Poli Anak' => 'Poli Anak',
+            // tambahkan poli lainnya
+        ];
+        return view('daftar_edit', compact('daftar', 'listPasien', 'listPoli'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Daftar $daftar)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'tanggal_daftar' => 'required|date',
+            'pasien_id' => 'required|exists:pasiens,id',
+            'poli' => 'required|string',
+            'keluhan' => 'required|string',
+        ]);
+
+        $daftar = Daftar::findOrFail($id);
+        $daftar->update($request->all());
+
+        return redirect('/daftar')->with('success', 'Pendaftaran berhasil diperbarui');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateDaftarRequest $request, Daftar $daftar)
+    public function destroy($id)
     {
-        //
-    }
+        $daftar = Daftar::findOrFail($id);
+        $daftar->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Daftar $daftar)
-    {
-        //
+        return redirect('/daftar')->with('success', 'Pendaftaran berhasil dihapus');
     }
 }
